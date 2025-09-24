@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dragon Ball — Completa los verbos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f1f5f9; --card:#ffffff; --accent:#3b82f6; --muted:#64748b;
+      --green:#16a34a; --red:#dc2626;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:Poppins,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;
+      margin:0;
+      background-image:url("https://wallpapers.com/images/hd/kid-goku-iw3nkftuvsdl0spu.jpg"); 
+      background-size:cover;
+      background-position:center;
+      background-attachment:fixed;
+      color:#0f172a;
+    }
+    .wrap{max-width:960px;margin:36px auto;padding:20px}
+    header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+    .logo{
+      width:60px;height:60px;border-radius:18px;
+      background:linear-gradient(135deg,var(--accent),#60a5fa);
+      display:flex;align-items:center;justify-content:center;
+      color:white;font-weight:800;font-size:22px;
+      box-shadow:0 6px 20px rgba(59,130,246,0.4)
+    }
+    h1{margin:0;font-size:24px;font-weight:700}
+    p.lead{margin:0;color:var(--muted);font-size:14px}
+
+    .card{
+      background:var(--card);border-radius:20px;padding:24px;
+      box-shadow:0 8px 28px rgba(0,0,0,0.15);
+      backdrop-filter: blur(6px);
+    }
+    .grid{display:grid;grid-template-columns:1fr 340px;gap:24px}
+
+    /* Área del cuento */
+    .story{padding:12px}
+    .line{display:flex;align-items:flex-start;gap:12px;
+      padding:10px 8px;border-radius:12px;transition:background .3s}
+    .line:hover{background:rgba(0,0,0,0.04)}
+    .index{
+      width:28px;height:28px;display:inline-grid;place-items:center;
+      background:#e2e8f0;border-radius:8px;color:var(--muted);font-size:13px
+    }
+    .text{flex:1;font-size:15px;line-height:1.4;color:#0f172a}
+    .blank{
+      display:inline-block;min-width:120px;padding:6px 10px;
+      border-radius:10px;border:2px dashed #cbd5e1;
+      background:#f8fafc;
+      cursor:pointer;text-align:center;transition:.3s
+    }
+    .blank.filled{border-style:solid}
+    .blank.correct{
+      background:#dcfce7;border-color:var(--green);color:#166534;
+    }
+    .blank.wrong{
+      background:#fee2e2;border-color:var(--red);color:#991b1b;
+    }
+
+    /* Verbos arrastrables */
+    .panel{display:flex;flex-direction:column;height:100%}
+    .options{
+      display:flex;flex-wrap:wrap;gap:10px;padding:16px;
+      border-radius:14px;background:#f1f5f9;
+      min-height:160px;align-content:flex-start
+    }
+    .word{
+      padding:10px 14px;border-radius:12px;background:#e2e8f0;
+      border:1px solid #cbd5e1;cursor:grab;user-select:none;
+      color:#0f172a;transition:transform .2s,background .2s
+    }
+    .word:hover{
+      background:#3b82f6;color:white;transform:scale(1.05)
+    }
+    .word[draggable="true"]:active{cursor:grabbing}
+
+    .helpers{display:flex;gap:10px;margin-top:14px}
+    button.btn{
+      padding:12px 16px;border-radius:12px;border:0;cursor:pointer;
+      font-weight:600;transition:background .2s,transform .2s
+    }
+    .btn-check{background:var(--accent);color:white}
+    .btn-check:hover{background:#2563eb;transform:scale(1.05)}
+    .btn-reset{background:#e2e8f0;color:#0f172a}
+    .btn-reset:hover{background:#cbd5e1;transform:scale(1.05)}
+    .result{margin-top:14px;font-weight:600}
+
+    footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:center}
+
+    @media (max-width:900px){.grid{grid-template-columns:1fr;}.panel{order:2}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">DB</div>
+      <div>
+        <h1>Dragon Ball — Completa los verbos</h1>
+        <p class="lead" style="color: white;">Arrastra el verbo correcto en pasado simple hasta el espacio en blanco.  
+        También puedes tocar un verbo y luego tocar el espacio.  
+        Cuando termines, presiona <b>Comprobar respuestas</b>.</p>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="grid">
+        <div class="story">
+          <div class="line"><div class="index">1</div><div class="text">Once upon a time, Goku <span class="blank" data-answer="lived"></span> in the mountains.</div></div>
+          <div class="line"><div class="index">2</div><div class="text">He <span class="blank" data-answer="trained"></span> every single day.</div></div>
+          <div class="line"><div class="index">3</div><div class="text">One morning he <span class="blank" data-answer="met"></span> Bulma.</div></div>
+          <div class="line"><div class="index">4</div><div class="text">Bulma <span class="blank" data-answer="explained"></span> the Dragon Balls.</div></div>
+          <div class="line"><div class="index">5</div><div class="text">Together they <span class="blank" data-answer="started"></span> a big journey.</div></div>
+          <div class="line"><div class="index">6</div><div class="text">Goku <span class="blank" data-answer="fought"></span> a huge dinosaur.</div></div>
+          <div class="line"><div class="index">7</div><div class="text">He <span class="blank" data-answer="protected"></span> Bulma with courage.</div></div>
+          <div class="line"><div class="index">8</div><div class="text">They <span class="blank" data-answer="found"></span> Oolong on the road.</div></div>
+          <div class="line"><div class="index">9</div><div class="text">Oolong <span class="blank" data-answer="helped"></span> them after a trick.</div></div>
+          <div class="line"><div class="index">10</div><div class="text">Later they <span class="blank" data-answer="discovered"></span> Yamcha.</div></div>
+          <div class="line"><div class="index">11</div><div class="text">Yamcha <span class="blank" data-answer="attacked"></span> them fiercely.</div></div>
+          <div class="line"><div class="index">12</div><div class="text">Goku <span class="blank" data-answer="defeated"></span> Yamcha quickly.</div></div>
+          <div class="line"><div class="index">13</div><div class="text">Soon Yamcha <span class="blank" data-answer="joined"></span> the group.</div></div>
+          <div class="line"><div class="index">14</div><div class="text">They <span class="blank" data-answer="reached"></span> Fire Mountain.</div></div>
+          <div class="line"><div class="index">15</div><div class="text">Goku <span class="blank" data-answer="met"></span> little Chi-Chi there.</div></div>
+          <div class="line"><div class="index">16</div><div class="text">He <span class="blank" data-answer="visited"></span> Master Roshi’s island.</div></div>
+          <div class="line"><div class="index">17</div><div class="text">Roshi <span class="blank" data-answer="gave"></span> Goku the magic Nimbus.</div></div>
+          <div class="line"><div class="index">18</div><div class="text">The friends <span class="blank" data-answer="continued"></span> their adventure.</div></div>
+          <div class="line"><div class="index">19</div><div class="text">They <span class="blank" data-answer="fought"></span> Emperor Pilaf bravely.</div></div>
+          <div class="line"><div class="index">20</div><div class="text">Finally, Goku <span class="blank" data-answer="destroyed"></span> the evil castle.</div></div>
+        </div>
+        <div class="panel">
+          <div class="options" id="options">
+            <div class="word" draggable="true">lived</div>
+            <div class="word" draggable="true">trained</div>
+            <div class="word" draggable="true">met</div>
+            <div class="word" draggable="true">explained</div>
+            <div class="word" draggable="true">started</div>
+            <div class="word" draggable="true">fought</div>
+            <div class="word" draggable="true">protected</div>
+            <div class="word" draggable="true">found</div>
+            <div class="word" draggable="true">helped</div>
+            <div class="word" draggable="true">discovered</div>
+            <div class="word" draggable="true">attacked</div>
+            <div class="word" draggable="true">defeated</div>
+            <div class="word" draggable="true">joined</div>
+            <div class="word" draggable="true">reached</div>
+            <div class="word" draggable="true">visited</div>
+            <div class="word" draggable="true">gave</div>
+            <div class="word" draggable="true">continued</div>
+            <div class="word" draggable="true">destroyed</div>
+          </div>
+          <div class="helpers">
+            <button class="btn btn-check" id="checkBtn">Comprobar respuestas</button>
+            <button class="btn btn-reset" id="resetBtn">Reiniciar</button>
+          </div>
+          <div class="result" id="result"></div>
+        </div>
+      </div>
+    </div>
+    <footer style="color: whitesmoke;">Práctica de inglés con Dragon Ball — Pasado simple</footer>
+  </div>
+
+  <script>
+    const blanks=document.querySelectorAll(".blank");
+    const words=document.querySelectorAll(".word");
+    const options=document.getElementById("options");
+    let selectedWord=null;
+
+    words.forEach(w=>{
+      w.addEventListener("dragstart",e=>{
+        e.dataTransfer.setData("text",w.textContent);
+      });
+      w.addEventListener("click",()=>{
+        if(selectedWord)selectedWord.classList.remove("selected");
+        selectedWord=w;w.classList.add("selected");
+      });
+    });
+
+    blanks.forEach(b=>{
+      b.addEventListener("dragover",e=>e.preventDefault());
+      b.addEventListener("drop",e=>{
+        e.preventDefault();
+        const t=e.dataTransfer.getData("text");
+        if(t){b.textContent=t;b.classList.add("filled");}
+      });
+      b.addEventListener("click",()=>{
+        if(selectedWord){b.textContent=selectedWord.textContent;b.classList.add("filled");selectedWord.classList.remove("selected");selectedWord=null;}
+      });
+    });
+
+    document.getElementById("checkBtn").addEventListener("click",()=>{
+      let correct=0;
+      blanks.forEach(b=>{
+        if(b.textContent===b.dataset.answer){b.classList.add("correct");b.classList.remove("wrong");correct++;}
+        else{b.classList.add("wrong");b.classList.remove("correct");}
+      });
+      document.getElementById("result").textContent=`Aciertos: ${correct}/${blanks.length}`;
+    });
+
+    document.getElementById("resetBtn").addEventListener("click",()=>{
+      blanks.forEach(b=>{
+        b.textContent="";b.classList.remove("filled","correct","wrong");
+      });
+      document.getElementById("result").textContent="";
+    });
+  </script>
+</body>
+</html>
